@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %} Edit profile - {{ profile['username'] }} {% endblock %}</h1>
+{% endblock %} 
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        <label for="photo">Edit photo</label>
+        <input type="file" name="file">
+        <label for="bio">Edit Bio</label>
+        <textarea name="bio">{{ request.form['bio'] or profile['bio'] }}</textarea>
+        <input type="submit" value="Save edit">
+    </form>
+{% endblock %}

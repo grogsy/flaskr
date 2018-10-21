@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %} Edit comment {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method='POST'>
+        <textarea name="comment_text">
+            {{ comment['comment_text'] }}
+        </textarea>
+        <input type="submit" value="Save Edit">
+    </form>
+{% endblock %}

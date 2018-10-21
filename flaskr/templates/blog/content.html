@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %} {{post['title'] }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<article class="post" id="single">
+			<header>
+				<div>
+					<div class="about">
+						<a href="{{ url_for('user.view_user', user=post['username']) }}">
+							by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}
+						</a>
+					</div>
+				</div>
+				{% if g.user['id'] == post['author_id'] %}
+					<a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+				{% endif %}
+			</header>
+			<p  class="body">{{ post['body'] }}</p>
+	</article>
+
+	<h1>Comments</h1>
+	{% for comment in comments %}
+		<header class='comment_container'>
+			<div class='user_info'>
+				<a href="{{ url_for('user.view_user', user=comment['poster']) }}">
+					<h4>{{ comment['poster'] }} wrote</h4>
+					<div class="date"> on {{ comment['created'].strftime('%Y-%m-%d') }}...</div>  
+				</a>
+				{% if g.user['username'] == comment['poster'] %}
+					<br>
+					<a href="{{ url_for('blog.edit_comment', id=comment['id'], post_id=post['id']) }}">Edit</a>
+					<br>
+					<form action="{{ url_for('blog.delete_comment', id=comment['id'], post_id=post['id']) }}" method="post">
+						<input class="danger" type="submit" value="Remove" onclick="return confirm('Delete this comment?');">
+					</form>
+				{% endif %}
+			</div>
+			<div class="comment_text">
+				<p>{{ comment['comment_text'] }}</p>
+			</div>
+		</header>
+	{% endfor %}
+
+	<form method="post">
+		<label for="comments">Reply</label>
+		<textarea name="comment" id="comment" required>Leave a comment</textarea>
+		<input type="submit" value="Reply">
+	</form>
+{% endblock %}
+

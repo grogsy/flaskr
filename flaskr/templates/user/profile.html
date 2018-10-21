@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %} User profile - {{ profile['username'] }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% if g.user['id'] == user['id'] %}
+        <a href="{{ url_for('user.update_profile', user=profile['username']) }}">Edit</a>
+    {% endif %}
+    <br>
+	<img width="50" height="50" src="{{ url_for('static', filename='img/'+profile['photo']) }}">
+	<h1>{{ profile['username'] }}</h1>
+	<p>Joined on: {{ profile['join_date'].strftime('%Y-%m-%d') }}</p>
+    <h1>Bio</h1>
+	<p>{{ profile['bio'] }}</p>
+	<!--Link to Favorited posts perhaps?-->
+	<!--Link to posts commented on?-->
+{% endblock %}
