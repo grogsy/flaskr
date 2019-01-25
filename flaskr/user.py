@@ -8,7 +8,7 @@ import os
 from flask import(
     Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from werkzeug.exceptions import abort
 
 from flaskr.db import get_db
@@ -17,6 +17,7 @@ from flaskr.auth import login_required
 bp = Blueprint('user', __name__, url_prefix='/user')
 
 VALID_EXTENSIONS = set('jpg jpeg png'.split())
+IMG_DESTINATION = os.sep+'static'+os.sep+'img'
 
 
 @bp.route('/<string:user>', methods=('GET',))
@@ -64,7 +65,7 @@ def update_profile(user):
             # source:
             #   best answer of https://stackoverflow.com/questions/30836690/flask-odd-behavior-w-folder-creation-file-uploading
             # Very dirty filepath management hacking
-            path = os.path.dirname(os.path.abspath(__file__)) + "\\static\\img"
+            path = os.path.dirname(os.path.abspath(__file__)) + IMG_DESTINATION
             if not os.path.exists(path):
                 os.makedirs(path)
             current_app.config["UPLOAD_FOLDER"] = path
