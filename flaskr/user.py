@@ -44,6 +44,14 @@ def view_user(user):
 def update_profile(user):
     '''View for modifying information on the user page'''
     db = get_db()
+
+    this_user = db.execute('SELECT id from user WHERE username = ?',
+            (user,)
+    ).fetchone()
+
+    if this_user[0] != g.user['id']:
+        abort(403)
+
     profile_info = db.execute(
         'SELECT username, bio, photo FROM profile WHERE username = ?',
         (user,)
