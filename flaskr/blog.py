@@ -74,6 +74,7 @@ def get_post(_id, check_author=True):
 @login_required
 def update(id):
     '''View for modifying an existing post'''
+
     post = get_post(id)
 
     if request.method == 'POST':

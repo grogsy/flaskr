@@ -49,7 +49,7 @@ def update_profile(user):
             (user,)
     ).fetchone()
 
-    if this_user[0] != g.user['id']:
+    if this_user['id'] != g.user['id']:
         abort(403)
 
     profile_info = db.execute(
